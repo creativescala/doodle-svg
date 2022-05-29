@@ -5,8 +5,9 @@ package effect
 import doodle.algebra.generic._
 import doodle.core._
 import doodle.language.Basic
-import scala.collection.mutable
 import munit.CatsEffectSuite
+
+import scala.collection.mutable
 
 class SvgSpec
     extends CatsEffectSuite

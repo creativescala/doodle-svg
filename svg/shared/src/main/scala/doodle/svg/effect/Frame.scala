@@ -4,9 +4,11 @@ package effect
 
 import doodle.core.Color
 
-final case class Frame(id: String,
-                       size: Size,
-                       background: Option[Color] = None) {
+final case class Frame(
+    id: String,
+    size: Size,
+    background: Option[Color] = None
+) {
   def background(color: Color): Frame =
     this.copy(background = Some(color))
 

@@ -3,10 +3,10 @@ package svg
 
 import doodle.algebra.generic.Finalized
 import scalatags.generic.Bundle
+
 import scala.collection.mutable
 
-/**
-  * Base trait for SVG implementations, defining common types
+/** Base trait for SVG implementations, defining common types
   *
   * Used for ML-style modules to ensure the JVM and JS implementations make
   * consistent use of types, and the compiler can prove this.

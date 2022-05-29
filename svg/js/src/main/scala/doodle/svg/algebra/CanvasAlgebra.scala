@@ -3,8 +3,10 @@ package svg
 package algebra
 
 import cats.effect.IO
-import doodle.interact.algebra.{MouseClick, MouseMove, Redraw}
 import doodle.core.Point
+import doodle.interact.algebra.MouseClick
+import doodle.interact.algebra.MouseMove
+import doodle.interact.algebra.Redraw
 import doodle.svg.effect.Canvas
 import fs2.Stream
 

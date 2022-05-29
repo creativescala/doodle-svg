@@ -3,8 +3,8 @@ package svg
 package effect
 
 import cats.effect.IO
-import doodle.effect.Renderer
 import cats.effect.unsafe.IORuntime
+import doodle.effect.Renderer
 
 object SvgRenderer extends Renderer[Algebra, Drawing, Frame, Canvas] {
 

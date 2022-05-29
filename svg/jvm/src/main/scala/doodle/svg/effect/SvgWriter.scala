@@ -3,9 +3,10 @@ package svg
 package effect
 
 import cats.effect.IO
+import doodle.algebra.Picture
 import doodle.core.{Base64 => B64}
 import doodle.effect._
-import doodle.algebra.Picture
+
 import java.io.File
 import java.nio.file.Files
 import java.util.{Base64 => JBase64}
@@ -20,20 +21,21 @@ object SvgWriter
   ): IO[A] = {
     Svg
       .render[Algebra, A](description, algebraInstance, picture)
-      .flatMap {
-        case (nodes, a) =>
-          IO {
-            Files.write(file.toPath, nodes.getBytes())
-            a
-          }
+      .flatMap { case (nodes, a) =>
+        IO {
+          Files.write(file.toPath, nodes.getBytes())
+          a
+        }
       }
   }
 
   def write[A](file: File, picture: Picture[Algebra, Drawing, A]): IO[A] =
     write(file, Frame("").fitToPicture(), picture)
 
-  def base64[A](frame: Frame,
-                image: Picture[Algebra, Drawing, A]): IO[(A, B64[Writer.Svg])] =
+  def base64[A](
+      frame: Frame,
+      image: Picture[Algebra, Drawing, A]
+  ): IO[(A, B64[Writer.Svg])] =
     for {
       rendered <- Svg
         .render[Algebra, A](frame, algebraInstance, image)
@@ -42,6 +44,7 @@ object SvgWriter
     } yield (value, B64[Writer.Svg](b64))
 
   def base64[A](
-      picture: Picture[Algebra, Drawing, A]): IO[(A, B64[Writer.Svg])] =
+      picture: Picture[Algebra, Drawing, A]
+  ): IO[(A, B64[Writer.Svg])] =
     base64(Frame("").fitToPicture(), picture)
 }

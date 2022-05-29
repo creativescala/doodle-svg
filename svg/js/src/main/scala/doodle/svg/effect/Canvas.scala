@@ -3,17 +3,20 @@ package svg
 package effect
 
 import cats.effect.IO
-import cats.effect.unsafe.IORuntime
 import cats.effect.std.Queue
-import doodle.core.{BoundingBox, Color, Point, Transform}
+import cats.effect.unsafe.IORuntime
+import doodle.core.BoundingBox
+import doodle.core.Color
+import doodle.core.Point
+import doodle.core.Transform
 import doodle.core.font.Font
+import doodle.interact.syntax.redraw
 import fs2.Stream
 import org.scalajs.dom
 import org.scalajs.dom.svg.Rect
 import scalatags.JsDom
-import scalatags.JsDom.svgTags
 import scalatags.JsDom.svgAttrs
-import doodle.interact.syntax.redraw
+import scalatags.JsDom.svgTags
 
 final case class Canvas(
     target: dom.Node,

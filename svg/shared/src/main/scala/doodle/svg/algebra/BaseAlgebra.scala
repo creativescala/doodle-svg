@@ -2,9 +2,10 @@ package doodle
 package svg
 package algebra
 
-import doodle.language.Basic
-import doodle.algebra.{Layout, Size}
+import doodle.algebra.Layout
+import doodle.algebra.Size
 import doodle.algebra.generic._
+import doodle.language.Basic
 
 trait AlgebraModule {
   self: Base with ShapeModule with PathModule with SvgModule =>

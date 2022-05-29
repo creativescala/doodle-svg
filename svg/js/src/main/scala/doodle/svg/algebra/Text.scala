@@ -3,11 +3,13 @@ package svg
 package algebra
 
 import doodle.algebra.generic._
-import doodle.core.{BoundingBox, Transform => Tx}
+import doodle.core.BoundingBox
 import doodle.core.font.Font
-import scala.collection.mutable
+import doodle.core.{Transform => Tx}
 import org.scalajs.dom.svg.Rect
 import scalatags.JsDom.svgAttrs
+
+import scala.collection.mutable
 
 trait TextModule extends JsBase {
   trait Text extends GenericText[SvgResult] { self: HasTextBoundingBox =>
@@ -33,7 +35,8 @@ trait TextModule extends JsBase {
         val elt = Svg.textTag(text, font)(
           svgAttrs.x := -(bounds.x + bounds.width) / 2.0,
           svgAttrs.y := (bounds.y + bounds.height) / 2.0,
-          svgAttrs.style := style)
+          svgAttrs.style := style
+        )
 
         (elt, set, ())
       }

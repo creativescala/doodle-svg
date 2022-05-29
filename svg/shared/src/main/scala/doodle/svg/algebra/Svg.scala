@@ -4,19 +4,22 @@ package algebra
 
 import cats.Apply
 import cats.effect.IO
+import doodle.algebra.Picture
+import doodle.algebra.generic.Fill
+import doodle.algebra.generic.Stroke
 import doodle.core._
 import doodle.core.font._
-import doodle.algebra.Picture
-import doodle.algebra.generic.{Fill, Stroke}
 import doodle.svg.effect.Size
+
 import scala.collection.mutable
 
 trait SvgModule { self: Base =>
   object Svg {
     implicit val svgResultApply: Apply[SvgResult] =
       new Apply[SvgResult] {
-        def ap[A, B](ff: SvgResult[(A) => B])(
-            fa: SvgResult[A]): SvgResult[B] = {
+        def ap[A, B](
+            ff: SvgResult[(A) => B]
+        )(fa: SvgResult[A]): SvgResult[B] = {
           val (t1, s1, fab) = ff
           val (t2, s2, a) = fa
 
@@ -37,7 +40,8 @@ trait SvgModule { self: Base =>
     def render[Alg[x[_]] <: doodle.algebra.Algebra[x], A](
         frame: Frame,
         algebra: Alg[Drawing],
-        picture: Picture[Alg, Drawing, A]): IO[(Output, A)] = {
+        picture: Picture[Alg, Drawing, A]
+    ): IO[(Output, A)] = {
       renderWithoutRootTag(algebra, picture)
         .map { case (bb, tags, a) => (svgTag(bb, frame)(tags).render, a) }
     }
@@ -45,7 +49,8 @@ trait SvgModule { self: Base =>
     /** Render to SVG without wrapping with a root <svg> tag. */
     def renderWithoutRootTag[Alg[x[_]] <: doodle.algebra.Algebra[x], A](
         algebra: Alg[Drawing],
-        picture: Picture[Alg, Drawing, A]): IO[(BoundingBox, Tag, A)] = {
+        picture: Picture[Alg, Drawing, A]
+    ): IO[(BoundingBox, Tag, A)] = {
       for {
         drawing <- IO { picture(algebra) }
         (bb, rdr) = drawing.runA(List.empty).value
@@ -54,8 +59,9 @@ trait SvgModule { self: Base =>
       } yield (bb, tagsWithGradients, a)
     }
 
-    /** Given a bounding box and a size specification create a <svg> tag that has the
-      * correct size and viewbox */
+    /** Given a bounding box and a size specification create a <svg> tag that
+      * has the correct size and viewbox
+      */
     def svgTag(bb: BoundingBox, frame: Frame): Tag =
       frame.size match {
         case Size.FitToPicture(border) =>
@@ -115,8 +121,7 @@ trait SvgModule { self: Base =>
       svg.text(svgAttrs.style := style, text)
     }
 
-    /**
-      * Transform from client coordinates to local coordinates
+    /** Transform from client coordinates to local coordinates
       */
     def inverseClientTransform(bb: BoundingBox, size: Size): Transform = {
       size match {
@@ -130,27 +135,29 @@ trait SvgModule { self: Base =>
       }
     }
 
-    /**
-      * Given stroke and fill returns a `String` representing the stroke and fill rendered as SVG styles.
+    /** Given stroke and fill returns a `String` representing the stroke and
+      * fill rendered as SVG styles.
       *
-      * If the fill specifies a gradient that gradient, represented in SVG form as
-      * a Tag, is added to the given Set as a side-effect.
+      * If the fill specifies a gradient that gradient, represented in SVG form
+      * as a Tag, is added to the given Set as a side-effect.
       */
-    def toStyle(stroke: Option[Stroke],
-                fill: Option[Fill],
-                gradients: mutable.Set[Tag]): String = {
+    def toStyle(
+        stroke: Option[Stroke],
+        fill: Option[Fill],
+        gradients: mutable.Set[Tag]
+    ): String = {
       val f = fill.fold("fill: none;")(f => this.toStyle(f, gradients))
       val s = stroke.fold("stroke: none;")(Svg.toStyle(_))
 
       s ++ " " ++ f
     }
 
-    /**
-      * Given a Fill return the string to insert as the style part of the tag being rendered
+    /** Given a Fill return the string to insert as the style part of the tag
+      * being rendered
       *
-      * Additionally, if this fill represents a gradient add that gradient to the
-      * given Set as a side-effect. In SVG gradients cannot be specified inline.
-      * Hence this construction.
+      * Additionally, if this fill represents a gradient add that gradient to
+      * the given Set as a side-effect. In SVG gradients cannot be specified
+      * inline. Hence this construction.
       */
     def toStyle(fill: Fill, gradients: mutable.Set[Tag]): String = {
       fill match {
@@ -188,11 +195,13 @@ trait SvgModule { self: Base =>
     }
 
     def toSvgRadialGradient(gradient: Gradient.Radial): (String, Tag) = {
-      val (cx, cy, fx, fy, r) = (gradient.outer.x,
-                                 gradient.outer.y,
-                                 gradient.inner.x,
-                                 gradient.inner.y,
-                                 gradient.radius)
+      val (cx, cy, fx, fy, r) = (
+        gradient.outer.x,
+        gradient.outer.y,
+        gradient.inner.x,
+        gradient.inner.y,
+        gradient.radius
+      )
       val id = Svg.toGradientId(gradient)
       val spreadMethod = Svg.toSvgSpreadMethod(gradient.cycleMethod)
       val stops = gradient.stops.map(this.toSvgGradientStop)
@@ -214,9 +223,11 @@ trait SvgModule { self: Base =>
       val (c, offset) = tuple
       val color = Svg.toRGB(c)
       val opacity = c.alpha.get
-      svg.stop(svgAttrs.offset := offset,
-               svgAttrs.stopColor := color,
-               svgAttrs.stopOpacity := opacity)
+      svg.stop(
+        svgAttrs.offset := offset,
+        svgAttrs.stopColor := color,
+        svgAttrs.stopOpacity := opacity
+      )
     }
 
     def toStyle(stroke: Stroke): String = {
@@ -273,8 +284,9 @@ trait SvgModule { self: Base =>
         case LineTo(end) =>
           builder ++= s"L ${format(end.x)},${format(end.y)} "
         case BezierCurveTo(cp1, cp2, end) =>
-          builder ++= s"C ${format(cp1.x)},${format(cp1.y)} ${format(cp2.x)},${format(
-            cp2.y)} ${format(end.x)},${format(end.y)} "
+          builder ++= s"C ${format(cp1.x)},${format(cp1.y)} ${format(
+            cp2.x
+          )},${format(cp2.y)} ${format(end.x)},${format(end.y)} "
       }
       pathType match {
         case Open   => builder.toString
