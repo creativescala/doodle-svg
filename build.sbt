@@ -1,6 +1,8 @@
 lazy val scala213 = "2.13.8"
 lazy val scala3 = "3.1.2"
 
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
 ThisBuild / crossScalaVersions := List(scala3, scala213)
 ThisBuild / scalaVersion := crossScalaVersions.value.head
 ThisBuild / useSuperShell := false
@@ -10,7 +12,8 @@ ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 
 // Run this (build) to do everything involved in building the project
 commands += Command.command("build") { state =>
-  "compile" ::
+  "clean" ::
+    "compile" ::
     "test" ::
     "scalafixAll" ::
     "scalafmtAll" ::
@@ -29,7 +32,8 @@ lazy val svg =
       libraryDependencies ++= Seq(
         "org.creativescala" %%% "doodle" % "0.10.1",
         "com.lihaoyi" %%% "scalatags" % "0.11.1",
-        "org.scalameta" %%% "munit" % "0.7.29" % "test"
+        "org.scalameta" %%% "munit" % "0.7.29" % Test,
+        "org.typelevel" %%% "munit-cats-effect-3" % "1.0.7" % Test
       ),
       libraryDependencies ++= (
         if (scalaBinaryVersion.value == "2.13")
