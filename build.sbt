@@ -9,6 +9,7 @@ ThisBuild / useSuperShell := false
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.5.0"
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
+ThisBuild / tlSitePublishBranch := Some("main")
 
 // Run this (build) to do everything involved in building the project
 commands += Command.command("build") { state =>
@@ -46,3 +47,5 @@ lazy val svg =
 
 lazy val svgJvm = svg.jvm
 lazy val svgJs = svg.js
+
+lazy val docs = project.in(file("site")).enablePlugins(TypelevelSitePlugin)
