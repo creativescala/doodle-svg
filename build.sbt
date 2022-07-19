@@ -9,7 +9,6 @@ ThisBuild / useSuperShell := false
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.5.0"
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
-ThisBuild / tlSitePublishBranch := Some("main")
 
 // Run this (build) to do everything involved in building the project
 commands += Command.command("build") { state =>
@@ -20,6 +19,8 @@ commands += Command.command("build") { state =>
     "scalafmtAll" ::
     state
 }
+val createDocs = taskKey[Unit]("Produce documentation")
+val previewDocs = taskKey[Unit]("Preview documentation")
 
 lazy val svg =
   crossProject(JSPlatform, JVMPlatform)
@@ -48,4 +49,12 @@ lazy val svg =
 lazy val svgJvm = svg.jvm
 lazy val svgJs = svg.js
 
-lazy val docs = project.in(file("site")).enablePlugins(TypelevelSitePlugin)
+lazy val docs = project
+  .in(file("docs"))
+  .settings(
+    createDocs := Def.sequential(mdoc.toTask(""), laikaSite).value,
+    previewDocs := Def.sequential(mdoc.toTask(""), laikaPreview).value,
+    mdocIn := baseDirectory.value / "src",
+    Laika / sourceDirectories := Seq(mdocOut.value)
+  )
+  .enablePlugins(MdocPlugin, LaikaPlugin)

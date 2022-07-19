@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="${?laika.site.metadata.language}">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Laika 0.18.1" />
+    <title>${cursor.currentDocument.title}</title>
+    @:for(laika.site.metadata.authors)
+      <meta name="author" content="${_}"/>
+    @:@
+    @:for(laika.site.metadata.description)
+      <meta name="description" content="${_}"/>
+    @:@
+    @:linkCSS{ paths = ["/css"] }
+    @:linkJS{ paths = ["/js"] }
+    <script>
+     tailwind.config = {}
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        h1 {
+          @apply text-4xl font-bold;
+        }
+        h2 {
+          @apply text-2xl font-bold;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="flex">
+      <nav class="w-1/4">
+        <p class="header"><a href="#">${cursor.currentDocument.title}</a></p>
+
+        @:navigationTree {
+          entries = [
+           { target = "#", excludeRoot = true, depth = 2 }
+          ]
+        }
+
+        <p class="footer">@:for(helium.markupEditLinks)<a href="${_.baseURL}${cursor.currentDocument.path}">${_.icon}${_.text}</a>@:@</p>
+      </nav>
+
+      <main class="w-3/4">
+        ${cursor.currentDocument.content}
+      </main>
+    </div>
+  </body>
+</html>
