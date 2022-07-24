@@ -48,6 +48,9 @@ lazy val svg =
 
 lazy val svgJvm = svg.jvm
 lazy val svgJs = svg.js
+  .settings(
+    mainClass := Some("doodle.svg.examples.ConcentricCircles")
+  )
 
 lazy val docs = project
   .in(file("docs"))
