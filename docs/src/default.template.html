@@ -20,18 +20,27 @@
     <style type="text/tailwindcss">
       @layer base {
         h1 {
-          @apply text-4xl font-bold;
+          @apply text-4xl font-bold mb-4;
         }
         h2 {
-          @apply text-2xl font-bold;
+          @apply text-2xl font-bold mt-4 mb-2;
         }
+        p {
+          @apply mb-1;
+        }
+        a {
+          @apply text-blue-500;
+        }
+        /* p > code {
+          @apply rounded-xl p-4 my-4 bg-slate-700 text-white block;
+        } */
       }
     </style>
   </head>
 
   <body>
-    <div class="flex">
-      <nav class="w-1/4">
+    <div class="flex divide-x">
+      <nav class="w-1/4 p-8">
         <p class="header"><a href="#">${cursor.currentDocument.title}</a></p>
 
         @:navigationTree {
@@ -39,13 +48,12 @@
            { target = "#", excludeRoot = true, depth = 2 }
           ]
         }
-
-        <p class="footer">@:for(helium.markupEditLinks)<a href="${_.baseURL}${cursor.currentDocument.path}">${_.icon}${_.text}</a>@:@</p>
       </nav>
 
-      <main class="w-3/4">
+      <main class="w-3/4 p-8">
         ${cursor.currentDocument.content}
       </main>
     </div>
   </body>
 </html>
+<!-- we outta here -->
