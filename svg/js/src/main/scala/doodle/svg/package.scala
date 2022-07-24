@@ -25,12 +25,13 @@ package object svg {
   val Frame = doodle.svg.effect.Frame
 
   type Picture[A] = doodle.algebra.Picture[Algebra, Drawing, A]
-  object Picture {
-    def apply(f: Algebra[Drawing] => Drawing[Unit]): Picture[Unit] = {
-      new Picture[Unit] {
-        def apply(implicit algebra: Algebra[Drawing]): Drawing[Unit] =
-          f(algebra)
-      }
-    }
+  object Picture
+      extends doodle.algebra.BaseConstructor
+      with doodle.algebra.PathConstructor
+      with doodle.algebra.ShapeConstructor
+      with doodle.algebra.TextConstructor {
+
+    type Algebra[x[_]] = java2d.Algebra[x]
+    type Drawing[A] = java2d.Drawing[A]
   }
 }
