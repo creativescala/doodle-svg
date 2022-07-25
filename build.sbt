@@ -49,7 +49,8 @@ lazy val svg =
 lazy val svgJvm = svg.jvm
 lazy val svgJs = svg.js
   .settings(
-    mainClass := Some("doodle.svg.examples.ConcentricCircles")
+    Compile / mainClass := Some("doodle.svg.examples.ConcentricCircles"),
+    scalaJSUseMainModuleInitializer := true
   )
 
 lazy val docs = project
@@ -58,6 +59,11 @@ lazy val docs = project
     createDocs := Def.sequential(mdoc.toTask(""), laikaSite).value,
     previewDocs := Def.sequential(mdoc.toTask(""), laikaPreview).value,
     mdocIn := baseDirectory.value / "src",
-    Laika / sourceDirectories := Seq(mdocOut.value)
+    Laika / sourceDirectories := Seq(
+      mdocOut.value,
+      (svgJs / Compile / fastOptJS / artifactPath).value
+        .getParentFile() / s"${(svgJs / moduleName).value}-fastopt"
+    )
   )
+  .dependsOn(svgJvm)
   .enablePlugins(MdocPlugin, LaikaPlugin)
