@@ -11,9 +11,13 @@ object ConcentricCircles extends IOApp.Simple {
     else
       Picture
         .circle(count * 20)
-        .fillColor(Color.peach.spin((count * 10).degrees))
+        .fillColor(Color.skyBlue.spin((count * 10).degrees))
   .on(circles(count - 1))
 
-  def main(args: Array[String]): Unit =
-    circles(10).drawWithFrame(Frame("svg-root"))
+  val run =
+    for {
+      canvas <- Frame("svg-root").canvas()
+      a <- circles(10).drawWithCanvasToIO(canvas)
+    } yield a
+
 }
