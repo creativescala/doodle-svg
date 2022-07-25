@@ -31,7 +31,7 @@ package object svg {
       with doodle.algebra.ShapeConstructor
       with doodle.algebra.TextConstructor {
 
-    type Algebra[x[_]] = java2d.Algebra[x]
-    type Drawing[A] = java2d.Drawing[A]
+    type Algebra[x[_]] = svg.Algebra[x]
+    type Drawing[A] = svg.Drawing[A]
   }
 }
