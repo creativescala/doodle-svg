@@ -32,7 +32,7 @@ lazy val svg =
         "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")
       ),
       libraryDependencies ++= Seq(
-        "org.creativescala" %%% "doodle" % "0.11.1",
+        "org.creativescala" %%% "doodle" % "0.11.2",
         "com.lihaoyi" %%% "scalatags" % "0.11.1",
         "org.scalameta" %%% "munit" % "0.7.29" % Test,
         "org.typelevel" %%% "munit-cats-effect-3" % "1.0.7" % Test
