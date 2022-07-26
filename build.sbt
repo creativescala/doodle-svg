@@ -63,6 +63,10 @@ lazy val docs = project
       mdocOut.value,
       (svgJs / Compile / fastOptJS / artifactPath).value
         .getParentFile() / s"${(svgJs / moduleName).value}-fastopt"
+    ),
+    laikaExtensions ++= Seq(
+      laika.markdown.github.GitHubFlavor,
+      laika.parse.code.SyntaxHighlighting
     )
   )
   .dependsOn(svgJvm)
