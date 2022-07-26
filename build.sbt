@@ -1,7 +1,14 @@
 lazy val scala213 = "2.13.8"
 lazy val scala3 = "3.1.2"
 
-Global / onChangedBuildSource := ReloadOnSourceChanges
+ThisBuild / tlBaseVersion := "0.1"
+
+ThisBuild / organization := "org.creativescala"
+ThisBuild / organizationName := "Creative Scala"
+
+ThisBuild / startYear := Some(2015)
+ThisBuild / licenses := Seq(License.Apache2)
+ThisBuild / developers := List(tlGitHubDev("noelwelsh", "Noel Welsh"))
 
 ThisBuild / crossScalaVersions := List(scala3, scala213)
 ThisBuild / scalaVersion := crossScalaVersions.value.head
@@ -10,27 +17,30 @@ ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports"
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 
+ThisBuild / scalacOptions ++= Seq("-release", "8")
+
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
 // Run this (build) to do everything involved in building the project
 commands += Command.command("build") { state =>
   "clean" ::
     "compile" ::
+    "fastOptJS" ::
     "test" ::
     "scalafixAll" ::
     "scalafmtAll" ::
+    "docs / createDocs" ::
     state
 }
 val createDocs = taskKey[Unit]("Produce documentation")
 val previewDocs = taskKey[Unit]("Preview documentation")
 
+lazy val root = tlCrossRootProject.aggregate(svg, docs)
+
 lazy val svg =
   crossProject(JSPlatform, JVMPlatform)
     .settings(
       moduleName := "doodle-svg",
-      scalacOptions ++= Seq("-release", "8"),
-      startYear := Some(2015),
-      licenses := List(
-        "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt")
-      ),
       libraryDependencies ++= Seq(
         "org.creativescala" %%% "doodle" % "0.11.2",
         "com.lihaoyi" %%% "scalatags" % "0.11.1",
