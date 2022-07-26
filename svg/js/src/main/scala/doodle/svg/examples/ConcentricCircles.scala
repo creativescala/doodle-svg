@@ -19,5 +19,4 @@ object ConcentricCircles extends IOApp.Simple {
       canvas <- Frame("svg-root").canvas()
       a <- circles(10).drawWithCanvasToIO(canvas)
     } yield a
-
 }
