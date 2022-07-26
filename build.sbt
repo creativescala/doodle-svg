@@ -16,7 +16,7 @@ ThisBuild / useSuperShell := false
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.5.0"
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
-
+ThisBuild / tlSitePublishBranch := Some("main")
 ThisBuild / scalacOptions ++= Seq("-release", "8")
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
@@ -29,13 +29,13 @@ commands += Command.command("build") { state =>
     "test" ::
     "scalafixAll" ::
     "scalafmtAll" ::
-    "docs / createDocs" ::
+    "docs / tlSite" ::
     state
 }
 val createDocs = taskKey[Unit]("Produce documentation")
 val previewDocs = taskKey[Unit]("Preview documentation")
 
-lazy val root = tlCrossRootProject.aggregate(svg, docs)
+lazy val root = tlCrossRootProject.aggregate(svg, docs, unidocs)
 
 lazy val svg =
   crossProject(JSPlatform, JVMPlatform)
@@ -80,4 +80,15 @@ lazy val docs = project
     )
   )
   .dependsOn(svgJvm)
-  .enablePlugins(MdocPlugin, LaikaPlugin)
+  .enablePlugins(TypelevelSitePlugin)
+
+lazy val unidocs = project
+  .in(file("unidocs"))
+  .enablePlugins(TypelevelUnidocPlugin) // also enables the ScalaUnidocPlugin
+  .settings(
+    name := "doodle-svg-docs",
+    ScalaUnidoc / unidoc / unidocProjectFilter := inProjects(
+      svgJvm,
+      svgJs
+    )
+  )
