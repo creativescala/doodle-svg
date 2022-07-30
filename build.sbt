@@ -77,7 +77,8 @@ lazy val docs = project
     laikaExtensions ++= Seq(
       laika.markdown.github.GitHubFlavor,
       laika.parse.code.SyntaxHighlighting
-    )
+    ),
+    tlSite.dependsOn(svgJs / fastLinkJS)
   )
   .dependsOn(svgJvm)
   .enablePlugins(TypelevelSitePlugin)
