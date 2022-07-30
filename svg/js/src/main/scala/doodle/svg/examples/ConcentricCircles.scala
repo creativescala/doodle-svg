@@ -26,8 +26,8 @@ object ConcentricCircles extends IOApp.Simple {
     if (count <= 0) Picture.empty
     else
       Picture
-        .circle(count * 20)
-        .fillColor(Color.skyBlue.spin((count * 10).degrees))
+        .circle(count.toDouble * 20.0)
+        .fillColor(Color.skyBlue.spin((count.toDouble * 10.0).degrees))
         .under(circles(count - 1))
 
   val run =

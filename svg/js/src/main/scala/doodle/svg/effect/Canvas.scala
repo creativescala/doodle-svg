@@ -26,7 +26,6 @@ import doodle.core.Color
 import doodle.core.Point
 import doodle.core.Transform
 import doodle.core.font.Font
-import doodle.interact.syntax.redraw
 import fs2.Stream
 import org.scalajs.dom
 import org.scalajs.dom.svg.Rect
@@ -44,6 +43,8 @@ final case class Canvas(
 )(implicit runtime: IORuntime) {
   import JsDom.all.{Tag => _, _}
 
+  val nullCallback: Either[Throwable, Unit] => Unit = _ => ()
+
   val algebra: Algebra[Drawing] =
     new js.JsAlgebra(this, Svg.svgResultApply, Svg.svgResultApply)
 
@@ -55,7 +56,7 @@ final case class Canvas(
     def register(): Unit = {
       val callback: (Double => Unit) = (ts: Double) => {
         if (started) {
-          redrawQueue.offer((ts - lastTs).toInt).unsafeRunAsync
+          redrawQueue.offer((ts - lastTs).toInt).unsafeRunAsync(nullCallback)
         } else {
           redrawQueue.offer(0)
           started = true
@@ -76,7 +77,9 @@ final case class Canvas(
       val rect = evt.target.asInstanceOf[dom.Element].getBoundingClientRect()
       val x = evt.clientX - rect.left; //x position within the element.
       val y = evt.clientY - rect.top;
-      mouseClickQueue.offer(tx(doodle.core.Point(x, y))).unsafeRunAsync
+      mouseClickQueue
+        .offer(tx(doodle.core.Point(x, y)))
+        .unsafeRunAsync(nullCallback)
       ()
     }
 
@@ -88,7 +91,9 @@ final case class Canvas(
       val rect = evt.target.asInstanceOf[dom.Element].getBoundingClientRect()
       val x = evt.clientX - rect.left; //x position within the element.
       val y = evt.clientY - rect.top;
-      mouseMoveQueue.offer(tx(doodle.core.Point(x, y))).unsafeRunAsync
+      mouseMoveQueue
+        .offer(tx(doodle.core.Point(x, y)))
+        .unsafeRunAsync(nullCallback)
       ()
     }
 
