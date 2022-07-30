@@ -88,7 +88,6 @@ lazy val unidocs = project
   .settings(
     name := "doodle-svg-docs",
     ScalaUnidoc / unidoc / unidocProjectFilter := inProjects(
-      svgJvm,
       svgJs
     )
   )
