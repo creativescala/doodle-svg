@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Laika 0.18.1" />
+    <title>Doodle SVG</title>
+    
+      <meta name="author" content="Noel Welsh"/>
+    
+    
+      <meta name="description" content="docs"/>
+    
+    
+    <script src="js/tailwindcss-3.1.4.js"></script>
+    <script src="main.js"></script>
+    <script src="helium/laika-helium.js"></script>
+    <script>
+     tailwind.config = {}
+    </script>
+    <style type="text/tailwindcss">
+      @layer base {
+        h1 {
+          @apply text-4xl font-bold mb-4;
+        }
+        h2 {
+          @apply text-3xl font-bold mt-4 mb-2;
+        }
+        h3 {
+          @apply text-2xl font-bold mt-2 mb-2;
+        }
+        p {
+          @apply mb-1;
+        }
+        a {
+          @apply text-blue-500;
+        }
+        pre > code {
+          @apply rounded-xl p-4 my-4 bg-indigo-900 text-white block;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="flex divide-x">
+      <nav class="w-1/4 p-8">
+        <p class="header"><a href="#">Doodle SVG</a></p>
+
+        <ul class="nav-list">
+          <li class="level1"><a href="#getting-started">Getting Started</a></li>
+          <li class="level1"><a href="#usage">Usage</a></li>
+          <li class="level2"><a href="#running-in-the-browser">Running in the Browser</a></li>
+          <li class="level1"><a href="#running-on-the-jvm">Running on the JVM</a></li>
+        </ul>
+      </nav>
+
+      <main class="w-3/4 p-8">
+        <div id="svg-root"></div>
+        <h1 id="doodle-svg" class="title">Doodle SVG</h1>
+        <p>A <a href="https://github.com/creativescala/doodle">Doodle</a> backend for SVG.</p>
+        <p>This project draws Doodle pictures to SVG, both in the browser using <a href="https://scala-js.org/">Scala JS</a> and to files on the JVM.</p>
+        
+        <h2 id="getting-started" class="section">Getting Started<a class="anchor-link right" href="#getting-started"><i class="icofont-laika">&#xef71;</i></a></h2>
+        <p>Add the following dependency to your <code>build.sbt</code>:</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">libraryDependencies</span><span> += </span><span class="string-literal">&quot;org.creativescala&quot;</span><span> %%% </span><span class="string-literal">&quot;doodle-svg&quot;</span><span> %% </span><span class="number-literal">0.1</span><span>-</span><span class="identifier">e2418d8</span><span>-</span><span class="type-name">SNAPSHOT</span></code></pre>
+        
+        <h2 id="usage" class="section">Usage<a class="anchor-link right" href="#usage"><i class="icofont-laika">&#xef71;</i></a></h2>
+        <p>Firstly, bring everything into scope</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">import</span><span> </span><span class="identifier">doodle</span><span>.</span><span class="identifier">svg</span><span>.</span><span class="identifier">_</span></code></pre>
+        <p>Now what you can do depends on whether you are running in the browser or on the JVM.</p>
+        
+        <h3 id="running-in-the-browser" class="section">Running in the Browser<a class="anchor-link right" href="#running-in-the-browser"><i class="icofont-laika">&#xef71;</i></a></h3>
+        <p>In the browser you can draw a picture to SVG. To do this, construct a <code>Frame</code> with the <code>id</code> of the DOM element where you&#39;d like the picture drawn.</p>
+        <p>For example, if you have the following element in your HTML</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="tag-punctuation">&lt;</span><span class="tag-name">div</span><span class="tag-punctuation"> </span><span class="attribute-name">id</span><span class="tag-punctuation">=</span><span class="string-literal">&quot;svg-root&quot;</span><span class="tag-punctuation">&gt;&lt;/</span><span class="tag-name">div</span><span class="tag-punctuation">&gt;</span></code></pre>
+        <p>then you can create a <code>Frame</code> referring to it with</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="keyword">val</span><span> </span><span class="identifier">frame</span><span> = </span><span class="type-name">Frame</span><span>(</span><span class="string-literal">&quot;svg-root&quot;</span><span>)</span></code></pre>
+        <p>Now suppose you have a picture called <code>thePicture</code>. You can draw it using the frame you just created like so</p>
+        <pre class="keep-together pdf epub"><code class="nohighlight"><span class="identifier">thePicture</span><span>.</span><span class="identifier">drawWithFrame</span><span>(</span><span class="identifier">frame</span><span>)</span></code></pre>
+        <p>The rendered SVG will appear where the element is positioned on your web page.</p>
+        
+        <h2 id="running-on-the-jvm" class="section">Running on the JVM<a class="anchor-link right" href="#running-on-the-jvm"><i class="icofont-laika">&#xef71;</i></a></h2>
+        <p>On the JVM you can&#39;t draw SVG to the screen. Use the <code>java2d</code> backend for that instead. However you can write SVG output in the usual way.</p>
+      </main>
+    </div>
+  </body>
+</html>
+<!-- we outta here -->
