@@ -78,9 +78,15 @@ lazy val docs = project
       laika.markdown.github.GitHubFlavor,
       laika.parse.code.SyntaxHighlighting
     ),
-    tlSite.dependsOn(svgJs / fastLinkJS)
+    tlSite := Def
+      .sequential(
+        (svgJs / Compile / fastOptJS),
+        mdoc.toTask(""),
+        laikaSite
+      )
+      .value
   )
-  .dependsOn(svgJvm)
+  .dependsOn(svgJs)
   .enablePlugins(TypelevelSitePlugin)
 
 lazy val unidocs = project
