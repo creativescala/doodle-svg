@@ -1,7 +1,7 @@
 lazy val scala213 = "2.13.8"
 lazy val scala3 = "3.1.2"
 
-ThisBuild / tlBaseVersion := "0.1"
+ThisBuild / tlBaseVersion := "0.11"
 
 ThisBuild / organization := "org.creativescala"
 ThisBuild / organizationName := "Creative Scala"
