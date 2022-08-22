@@ -29216,7 +29216,7 @@ $c_Ldoodle_svg_effect_Canvas.prototype.svgRoot__Ldoodle_core_BoundingBox__Lorg_s
   }
 });
 $c_Ldoodle_svg_effect_Canvas.prototype.renderChild__Lorg_scalajs_dom_Node__Lorg_scalajs_dom_Node__V = (function(svgRoot, nodes) {
-  if ((this.Ldoodle_svg_effect_Canvas__f_svgChild === null)) {
+  if (((this.Ldoodle_svg_effect_Canvas__f_svgChild === null) || (!$uZ(svgRoot.contains(this.Ldoodle_svg_effect_Canvas__f_svgChild))))) {
     svgRoot.appendChild(nodes);
     this.Ldoodle_svg_effect_Canvas__f_svgChild = nodes
   } else {
