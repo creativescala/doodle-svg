@@ -131,7 +131,7 @@ final case class Canvas(
 
   private var svgChild: dom.Node = _
   def renderChild(svgRoot: dom.Node, nodes: dom.Node): Unit = {
-    if (svgChild == null) {
+    if (svgChild == null || !svgRoot.contains(svgChild)) {
       svgRoot.appendChild(nodes)
       svgChild = nodes
     } else {
