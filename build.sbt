@@ -1,7 +1,12 @@
+import scala.sys.process._
+import laika.rewrite.link.LinkConfig
+import laika.rewrite.link.ApiLinks
+import laika.theme.Theme
+
 lazy val scala213 = "2.13.8"
 lazy val scala3 = "3.1.2"
 
-ThisBuild / tlBaseVersion := "0.11"
+ThisBuild / tlBaseVersion := "0.12"
 
 ThisBuild / organization := "org.creativescala"
 ThisBuild / organizationName := "Creative Scala"
@@ -32,6 +37,7 @@ commands += Command.command("build") { state =>
     "docs / tlSite" ::
     state
 }
+val css = taskKey[Unit]("Build the CSS")
 val createDocs = taskKey[Unit]("Produce documentation")
 val previewDocs = taskKey[Unit]("Preview documentation")
 
@@ -69,31 +75,51 @@ lazy val svgJs = svg.js
     scalaJSUseMainModuleInitializer := true
   )
 
-lazy val docs = project
-  .in(file("docs"))
-  .settings(
-    createDocs := Def.sequential(mdoc.toTask(""), laikaSite).value,
-    previewDocs := Def.sequential(mdoc.toTask(""), laikaPreview).value,
-    mdocIn := baseDirectory.value / "src",
-    Laika / sourceDirectories := Seq(
-      mdocOut.value,
-      (svgJs / Compile / fastOptJS / artifactPath).value
-        .getParentFile() / s"${(svgJs / moduleName).value}-fastopt"
-    ),
-    laikaExtensions ++= Seq(
-      laika.markdown.github.GitHubFlavor,
-      laika.parse.code.SyntaxHighlighting
-    ),
-    tlSite := Def
-      .sequential(
-        (svgJs / Compile / fastOptJS),
-        mdoc.toTask(""),
-        laikaSite
-      )
-      .value
-  )
-  .dependsOn(svgJs)
-  .enablePlugins(TypelevelSitePlugin)
+lazy val docs =
+  project
+    .in(file("docs"))
+    .settings(
+      scalaJSUseMainModuleInitializer := true,
+      laikaConfig := laikaConfig.value.withConfigValue(
+        LinkConfig(apiLinks =
+          Seq(
+            ApiLinks(baseUri =
+              "https://javadoc.io/doc/org.creativescala/doodle-svg-docs_3/latest/"
+            )
+          )
+        )
+      ),
+      mdocIn := file("docs/src/pages"),
+      css := {
+        val src = file("docs/src/css")
+        val dest1 = mdocOut.value
+        val dest2 = (laikaSite / target).value
+        val cmd1 =
+          s"npx tailwindcss -i ${src.toString}/creative-scala.css -o ${dest1.toString}/creative-scala.css"
+        val cmd2 =
+          s"npx tailwindcss -i ${src.toString}/creative-scala.css -o ${dest2.toString}/creative-scala.css"
+        cmd1 !
+
+        cmd2 !
+      },
+      Laika / sourceDirectories += file("docs/src/templates"),
+      laikaTheme := Theme.empty,
+      laikaExtensions ++= Seq(
+        laika.markdown.github.GitHubFlavor,
+        laika.parse.code.SyntaxHighlighting,
+        CreativeScalaDirectives
+      ),
+      tlSite := Def
+        .sequential(
+          // (Compile / fastLinkJS),
+          mdoc.toTask(""),
+          css,
+          laikaSite
+        )
+        .value
+    )
+    .dependsOn(svgJs)
+    .enablePlugins(TypelevelSitePlugin)
 
 lazy val unidocs = project
   .in(file("unidocs"))
