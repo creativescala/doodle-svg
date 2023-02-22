@@ -19,6 +19,10 @@ package svg
 package algebra
 
 import cats._
+import doodle.algebra.generic.Finalized
+import doodle.algebra.generic.Renderable
+import doodle.core.BoundingBox
+import doodle.core.font.Font
 
 trait TestAlgebraModule
     extends AlgebraModule
@@ -27,10 +31,38 @@ trait TestAlgebraModule
     with SvgModule
     with TestBase {
 
+  type Algebra = TestAlgebra
+
   final class TestAlgebra(
       val applyF: Apply[SvgResult],
       val functorF: Functor[SvgResult]
-  ) extends BaseAlgebra
-  val algebraInstance = new TestAlgebra(Svg.svgResultApply, Svg.svgResultApply)
+  ) extends BaseAlgebra {
+    def font[A](image: Drawing[A], font: Font): TestAlgebra.this.Drawing[A] =
+      ???
+    def text(text: String): Drawing[Unit] = ???
+
+    implicit val drawingInstance: cats.Applicative[Drawing] =
+      new Applicative[Drawing] {
+        def pure[A](x: A): Drawing[A] =
+          Finalized.leaf(_ =>
+            (
+              BoundingBox.empty,
+              Renderable(_ => Eval.now(Svg.svgResultApplicative.pure(x)))
+            )
+          )
+
+        def ap[A, B](ff: Drawing[A => B])(fa: Drawing[A]): Drawing[B] = ???
+      }
+
+    // Members declared in doodle.algebra.generic.GivenApply
+    implicit val applyDrawing: cats.Apply[SvgResult] =
+      Svg.svgResultApplicative
+
+    // Members declared in doodle.algebra.generic.GivenFunctor
+    implicit val functorDrawing: cats.Functor[SvgResult] =
+      Svg.svgResultApplicative
+  }
+  val algebraInstance =
+    new TestAlgebra(Svg.svgResultApplicative, Svg.svgResultApplicative)
 }
 object TestAlgebra extends TestAlgebraModule {}

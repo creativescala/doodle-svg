@@ -35,9 +35,10 @@ class SvgSpec
 
   test("circle renders to svg circle") {
     val diameter = 10.0
-    val circle = doodle.algebra.Picture[Basic, Drawing, Unit](algebra =>
-      algebra.strokeColor(algebra.circle(diameter), Color.black)
-    )
+    val circle = new doodle.algebra.Picture[Basic, Unit] {
+      def apply(implicit algebra: Basic): algebra.Drawing[Unit] =
+        algebra.strokeColor(algebra.circle(diameter), Color.black)
+    }
     val expected =
       svgTags.g(
         svgTags.defs(),

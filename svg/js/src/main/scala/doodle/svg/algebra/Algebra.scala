@@ -19,6 +19,8 @@ package svg
 package algebra
 
 import cats._
+import doodle.algebra.generic.Finalized
+import doodle.algebra.generic.Renderable
 import doodle.core.BoundingBox
 import doodle.core.font.Font
 import doodle.language.Basic
@@ -32,18 +34,37 @@ trait JsAlgebraModule
     with SvgModule
     with TextModule
     with JsBase {
-  type Algebra[F[_]] = doodle.algebra.Algebra[F]
-    with doodle.algebra.Text[F]
-    with Basic[F]
+  type Algebra = JsAlgebra
 
   final class JsAlgebra(
       val canvas: Canvas,
       val applyF: Apply[SvgResult],
       val functorF: Functor[SvgResult]
   ) extends BaseAlgebra
-      with HasTextBoundingBox
-      with Text {
+      with Text
+      with HasTextBoundingBox[Rect] {
     def textBoundingBox(text: String, font: Font): (BoundingBox, Rect) =
       canvas.textBoundingBox(text, font)
+
+    implicit val drawingInstance: cats.Applicative[JsAlgebra.this.Drawing] =
+      new Applicative[Drawing] {
+        def pure[A](x: A): JsAlgebra.this.Drawing[A] =
+          Finalized.leaf(_ =>
+            (
+              BoundingBox.empty,
+              Renderable(_ => Eval.now(Svg.svgResultApplicative.pure(x)))
+            )
+          )
+
+        def ap[A, B](ff: JsAlgebra.this.Drawing[A => B])(
+            fa: JsAlgebra.this.Drawing[A]
+        ): JsAlgebra.this.Drawing[B] = ???
+      }
+
+    implicit val applyDrawing: cats.Apply[JsAlgebraModule.this.SvgResult] =
+      Svg.svgResultApplicative
+
+    implicit val functorDrawing: cats.Functor[JsAlgebraModule.this.SvgResult] =
+      Svg.svgResultApplicative
   }
 }

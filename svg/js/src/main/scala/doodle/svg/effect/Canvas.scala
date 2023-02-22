@@ -45,8 +45,8 @@ final case class Canvas(
 
   val nullCallback: Either[Throwable, Unit] => Unit = _ => ()
 
-  val algebra: Algebra[Drawing] =
-    new js.JsAlgebra(this, Svg.svgResultApply, Svg.svgResultApply)
+  val algebra: Algebra =
+    new js.JsAlgebra(this, Svg.svgResultApplicative, Svg.svgResultApplicative)
 
   val redraw: Stream[IO, Int] = Stream.fromQueueUnterminated(redrawQueue)
 

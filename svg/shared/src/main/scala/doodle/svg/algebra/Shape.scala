@@ -24,8 +24,11 @@ import doodle.core.{Transform => Tx}
 
 import scala.collection.mutable
 
-trait ShapeModule { self: Base with SvgModule =>
+trait ShapeModule { root: Base with SvgModule =>
   trait Shape extends GenericShape[SvgResult] {
+    self: doodle.algebra.Algebra {
+      type Drawing[A] = doodle.algebra.generic.Finalized[SvgResult, A]
+    } =>
     object ShapeApi extends ShapeApi {
       val b = bundle
       import b.implicits._
@@ -40,7 +43,7 @@ trait ShapeModule { self: Base with SvgModule =>
       ): SvgResult[Unit] = {
         val x = -(width / 2.0)
         val y = -(height / 2.0)
-        val set = mutable.Set.empty[self.Tag]
+        val set = mutable.Set.empty[root.Tag]
         val style = Svg.toStyle(stroke, fill, set)
         val elt = svgTags.rect(
           svgAttrs.transform := Svg.toSvgTransform(tx),
@@ -65,7 +68,7 @@ trait ShapeModule { self: Base with SvgModule =>
         val h = height / 2.0
         val points = Array(Point(-w, -h), Point(0, h), Point(w, -h))
         val dAttr = Svg.toSvgPath(points, Svg.Closed)
-        val set = mutable.Set.empty[self.Tag]
+        val set = mutable.Set.empty[root.Tag]
         val style = Svg.toStyle(stroke, fill, set)
         val elt = svgTags.path(
           svgAttrs.transform := Svg.toSvgTransform(tx),
@@ -82,7 +85,7 @@ trait ShapeModule { self: Base with SvgModule =>
           stroke: Option[Stroke],
           diameter: Double
       ): SvgResult[Unit] = {
-        val set = mutable.Set.empty[self.Tag]
+        val set = mutable.Set.empty[root.Tag]
         val style = Svg.toStyle(stroke, fill, set)
         val elt = svgTags.circle(
           svgAttrs.transform := Svg.toSvgTransform(tx),

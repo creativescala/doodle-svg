@@ -35,6 +35,8 @@ commands += Command.command("build") { state =>
 val createDocs = taskKey[Unit]("Produce documentation")
 val previewDocs = taskKey[Unit]("Preview documentation")
 
+val doodleVersion = "0.15.0"
+
 lazy val root = tlCrossRootProject.aggregate(svg, docs, unidocs)
 
 lazy val svg =
@@ -42,8 +44,8 @@ lazy val svg =
     .settings(
       moduleName := "doodle-svg",
       libraryDependencies ++= Seq(
-        "org.creativescala" %%% "doodle" % "0.11.2",
-        "com.lihaoyi" %%% "scalatags" % "0.11.1",
+        "org.creativescala" %%% "doodle-core" % doodleVersion,
+        "com.lihaoyi" %%% "scalatags" % "0.12.0",
         "org.scalameta" %%% "munit" % "0.7.29" % Test,
         "org.typelevel" %%% "munit-cats-effect-3" % "1.0.7" % Test
       ),
@@ -57,8 +59,12 @@ lazy val svg =
     )
 
 lazy val svgJvm = svg.jvm
+  .settings(
+    libraryDependencies += "org.creativescala" %%% "doodle-java2d" % doodleVersion
+  )
 lazy val svgJs = svg.js
   .settings(
+    libraryDependencies += "org.creativescala" %%% "doodle-interact" % doodleVersion,
     Compile / mainClass := Some("doodle.svg.examples.ConcentricCircles"),
     scalaJSUseMainModuleInitializer := true
   )

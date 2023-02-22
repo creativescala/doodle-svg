@@ -18,7 +18,7 @@ package doodle
 package svg
 package algebra
 
-import cats.Apply
+import cats.Applicative
 import cats.effect.IO
 import doodle.algebra.Picture
 import doodle.algebra.generic.Fill
@@ -31,8 +31,8 @@ import scala.collection.mutable
 
 trait SvgModule { self: Base =>
   object Svg {
-    implicit val svgResultApply: Apply[SvgResult] =
-      new Apply[SvgResult] {
+    implicit val svgResultApplicative: Applicative[SvgResult] =
+      new Applicative[SvgResult] {
         def ap[A, B](
             ff: SvgResult[(A) => B]
         )(fa: SvgResult[A]): SvgResult[B] = {
@@ -42,10 +42,13 @@ trait SvgModule { self: Base =>
           (svg.g(t1, t2), s1.union(s2), fab(a))
         }
 
-        def map[A, B](fa: SvgResult[A])(f: (A) => B): SvgResult[B] = {
+        override def map[A, B](fa: SvgResult[A])(f: (A) => B): SvgResult[B] = {
           val (t, s, a) = fa
           (t, s, f(a))
         }
+
+        def pure[A](x: A): SvgResult[A] =
+          (bundle.svgTags.circle(), mutable.Set.empty, x)
       }
 
     val svg = bundle.svgTags
@@ -53,19 +56,19 @@ trait SvgModule { self: Base =>
     val implicits = bundle.implicits
     import implicits.{Tag => _, _}
 
-    def render[Alg[x[_]] <: doodle.algebra.Algebra[x], A](
+    def render[Alg <: self.Algebra, A](
         frame: Frame,
-        algebra: Alg[Drawing],
-        picture: Picture[Alg, Drawing, A]
+        algebra: Alg,
+        picture: Picture[Alg, A]
     ): IO[(Output, A)] = {
       renderWithoutRootTag(algebra, picture)
         .map { case (bb, tags, a) => (svgTag(bb, frame)(tags).render, a) }
     }
 
     /** Render to SVG without wrapping with a root <svg> tag. */
-    def renderWithoutRootTag[Alg[x[_]] <: doodle.algebra.Algebra[x], A](
-        algebra: Alg[Drawing],
-        picture: Picture[Alg, Drawing, A]
+    def renderWithoutRootTag[Alg <: self.Algebra, A](
+        algebra: Alg,
+        picture: Picture[Alg, A]
     ): IO[(BoundingBox, Tag, A)] = {
       for {
         drawing <- IO { picture(algebra) }

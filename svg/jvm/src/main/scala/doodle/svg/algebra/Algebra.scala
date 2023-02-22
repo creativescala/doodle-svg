@@ -19,19 +19,64 @@ package svg
 package algebra
 
 import cats._
+import doodle.algebra.generic.Finalized
+import doodle.algebra.generic.Renderable
+import doodle.core.BoundingBox
+import doodle.core.font.Font
+import doodle.java2d.algebra.Java2D
 import doodle.language.Basic
+
+import java.awt.Graphics2D
+import java.awt.geom.Rectangle2D
+import javax.swing.JPanel
+import scala.collection.mutable
 
 trait JvmAlgebraModule
     extends AlgebraModule
     with PathModule
     with ShapeModule
     with SvgModule
+    with TextModule
     with JvmBase {
-  type Algebra[F[_]] = doodle.algebra.Algebra[F] with Basic[F]
+  type Algebra = JvmAlgebra
 
-  final class JvmAlgebra(
-      val applyF: Apply[SvgResult],
-      val functorF: Functor[SvgResult]
-  ) extends BaseAlgebra
-  val algebraInstance = new JvmAlgebra(Svg.svgResultApply, Svg.svgResultApply)
+  final class JvmAlgebra()
+      extends JPanel(false)
+      with BaseAlgebra
+      with Text
+      with HasTextBoundingBox[Rectangle2D] {
+
+    def textBoundingBox(
+        text: String,
+        font: Font
+    ): (BoundingBox, Rectangle2D) = {
+      val metrics = this.getFontMetrics(Java2D.toAwtFont(font))
+      val bounds = metrics.getStringBounds(text, this.getGraphics())
+      val bb = BoundingBox.centered(bounds.getWidth(), bounds.getHeight())
+      (bb, bounds)
+    }
+
+    implicit val applyDrawing: cats.Apply[JvmAlgebraModule.this.SvgResult] =
+      Svg.svgResultApplicative
+
+    implicit val functorDrawing: cats.Functor[JvmAlgebraModule.this.SvgResult] =
+      Svg.svgResultApplicative
+
+    implicit val drawingInstance: Applicative[Drawing] =
+      new Applicative[Drawing] {
+        def pure[A](x: A): JvmAlgebra.this.Drawing[A] =
+          Finalized.leaf(_ =>
+            (
+              BoundingBox.empty,
+              Renderable(_ => Eval.now(Svg.svgResultApplicative.pure(x)))
+            )
+          )
+
+        def ap[A, B](ff: JvmAlgebra.this.Drawing[A => B])(
+            fa: JvmAlgebra.this.Drawing[A]
+        ): JvmAlgebra.this.Drawing[B] = ???
+      }
+  }
+
+  val algebraInstance = JvmAlgebra()
 }

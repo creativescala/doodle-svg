@@ -27,7 +27,7 @@ import scala.collection.mutable
   * Used for ML-style modules to ensure the JVM and JS implementations make
   * consistent use of types, and the compiler can prove this.
   */
-trait Base {
+trait Base { self =>
   type Builder
   type FragT
   type Output <: FragT
@@ -36,5 +36,6 @@ trait Base {
 
   type Tag = bundle.implicits.Tag
   type SvgResult[A] = (Tag, mutable.Set[Tag], A)
+  type Algebra <: doodle.algebra.Algebra { type Drawing[A] = self.Drawing[A] }
   type Drawing[A] = Finalized[SvgResult, A]
 }

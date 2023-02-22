@@ -24,8 +24,11 @@ import doodle.core.{Transform => Tx}
 
 import scala.collection.mutable
 
-trait PathModule { self: Base with SvgModule =>
+trait PathModule { root: Base with SvgModule =>
   trait Path extends GenericPath[SvgResult] {
+    self: doodle.algebra.Algebra {
+      type Drawing[A] = doodle.algebra.generic.Finalized[SvgResult, A]
+    } =>
     object PathApi extends PathApi {
       val b = bundle
       import b.implicits._
@@ -38,7 +41,7 @@ trait PathModule { self: Base with SvgModule =>
           elements: List[PathElement]
       ): SvgResult[Unit] = {
         val dAttr = Svg.toSvgPath(elements, Svg.Closed)
-        val set = mutable.Set.empty[self.Tag]
+        val set = mutable.Set.empty[root.Tag]
         val style = Svg.toStyle(stroke, fill, set)
         val elt = svgTags.path(
           svgAttrs.transform := Svg.toSvgTransform(tx),
@@ -56,7 +59,7 @@ trait PathModule { self: Base with SvgModule =>
           elements: List[PathElement]
       ): SvgResult[Unit] = {
         val dAttr = Svg.toSvgPath(elements, Svg.Open)
-        val set = mutable.Set.empty[self.Tag]
+        val set = mutable.Set.empty[root.Tag]
         val style = Svg.toStyle(stroke, fill, set)
         val elt = svgTags.path(
           svgAttrs.transform := Svg.toSvgTransform(tx),

@@ -21,7 +21,7 @@ package effect
 import cats.effect.IO
 import doodle.effect.Renderer
 
-object SvgRenderer extends Renderer[Algebra, Drawing, Frame, Canvas] {
+object SvgRenderer extends Renderer[Algebra, Frame, Canvas] {
 
   import cats.effect.unsafe.implicits.global
 

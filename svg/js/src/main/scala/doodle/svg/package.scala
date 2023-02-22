@@ -25,13 +25,13 @@ package object svg {
   // Need to re-export most of the things from JsAlgebraModule because directly
   // extending JsAlgebraModule from the package object leads to a compilation
   // error
-  type Algebra[F[_]] = js.Algebra[F]
+  type Algebra = js.Algebra
   type Drawing[A] = js.Drawing[A]
   val Svg = js.Svg
   type Tag = js.Tag
   type Frame = doodle.svg.effect.Frame
   type Canvas = doodle.svg.effect.Canvas
-  implicit val svgRenderer: Renderer[Algebra, Drawing, Frame, Canvas] =
+  implicit val svgRenderer: Renderer[Algebra, Frame, Canvas] =
     doodle.svg.effect.SvgRenderer
   implicit val svgAnimationRenderer: AnimationRenderer[Canvas] =
     doodle.svg.effect.SvgAnimationRenderer
@@ -40,14 +40,14 @@ package object svg {
 
   val Frame = doodle.svg.effect.Frame
 
-  type Picture[A] = doodle.algebra.Picture[Algebra, Drawing, A]
+  type Picture[A] = doodle.algebra.Picture[Algebra, A]
   object Picture
       extends doodle.algebra.BaseConstructor
       with doodle.algebra.PathConstructor
       with doodle.algebra.ShapeConstructor
       with doodle.algebra.TextConstructor {
 
-    type Algebra[x[_]] = svg.Algebra[x]
+    type Algebra = svg.Algebra
     type Drawing[A] = svg.Drawing[A]
   }
 }
