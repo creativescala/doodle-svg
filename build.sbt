@@ -70,15 +70,19 @@ lazy val svgJvm = svg.jvm
 lazy val svgJs = svg.js
   .settings(
     libraryDependencies += "org.creativescala" %%% "doodle-interact" % doodleVersion,
-    Compile / mainClass := Some("doodle.svg.examples.ConcentricCircles"),
-    scalaJSUseMainModuleInitializer := true
+    Compile / mainClass := Some("doodle.svg.examples.ConcentricCircles")
   )
+
+lazy val examples =
+  project
+    .in(file("examples"))
+    .dependsOn(svgJs)
+    .enablePlugins(ScalaJSPlugin)
 
 lazy val docs =
   project
     .in(file("docs"))
     .settings(
-      scalaJSUseMainModuleInitializer := true,
       laikaConfig := laikaConfig.value.withConfigValue(
         LinkConfig(apiLinks =
           Seq(
@@ -102,6 +106,9 @@ lazy val docs =
         cmd2 !
       },
       Laika / sourceDirectories += file("docs/src/templates"),
+      Laika / sourceDirectories +=
+        (examples / Compile / fastOptJS / artifactPath).value
+          .getParentFile() / s"${(examples / moduleName).value}-fastopt",
       laikaTheme := Theme.empty,
       laikaExtensions ++= Seq(
         laika.markdown.github.GitHubFlavor,
@@ -110,14 +117,14 @@ lazy val docs =
       ),
       tlSite := Def
         .sequential(
-          // (Compile / fastLinkJS),
+          (examples / Compile / fastLinkJS),
           mdoc.toTask(""),
           css,
           laikaSite
         )
         .value
     )
-    .dependsOn(svgJs)
+    .dependsOn(examples)
     .enablePlugins(TypelevelSitePlugin)
 
 lazy val unidocs = project

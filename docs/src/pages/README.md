@@ -53,3 +53,12 @@ The rendered SVG will appear where the element is positioned on your web page.
 ## Running on the JVM
 
 On the JVM you can't draw SVG to the screen. Use the `java2d` backend for that instead. However you can write SVG output in the usual way.
+
+
+## Examples
+
+### Concentric Circles
+@:doodle("concentric-circles", "ConcentricCircles.draw")
+
+### Doodle Logo
+@:doodle("doodle-logo", "DoodleLogo.draw")

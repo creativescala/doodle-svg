@@ -38,7 +38,7 @@ object CreativeScalaDirectives extends DirectiveRegistry {
               ),
               RawContent(
                 NonEmptySet.one("html"),
-                s"""<script>${js}("${id}")</script>"""
+                s"""<script>addEventListener("load", (evt) => ${js}("${id}"))</script>"""
               )
             )
           )
