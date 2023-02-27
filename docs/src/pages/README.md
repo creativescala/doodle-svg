@@ -1,6 +1,6 @@
 # Doodle SVG
 
-A [Doodle](https://github.com/creativescala/doodle) backend for SVG.
+A [Doodle](https://github.com/creativescala/doodle) backend for SVG. This is Doodle SVG @VERSION@, and is built against Doodle @DOODLE_VERSION@
 
 This project draws Doodle pictures to SVG, both in the browser using [Scala JS](https://scala-js.org/) and to files on the JVM.
 

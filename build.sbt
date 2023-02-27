@@ -40,7 +40,7 @@ val css = taskKey[Unit]("Build the CSS")
 val createDocs = taskKey[Unit]("Produce documentation")
 val previewDocs = taskKey[Unit]("Preview documentation")
 
-val doodleVersion = "0.15.0"
+val doodleVersion = "0.16.0"
 
 lazy val root = tlCrossRootProject.aggregate(svg, docs, unidocs)
 
@@ -92,6 +92,9 @@ lazy val docs =
           )
         )
       ),
+      mdocVariables := {
+        mdocVariables.value ++ Map("DOODLE_VERSION" -> doodleVersion)
+      },
       mdocIn := file("docs/src/pages"),
       css := {
         val src = file("docs/src/css")
