@@ -20,18 +20,36 @@ package effect
 
 import doodle.core.Color
 
+/** The [[Frame]] specifies how to create the area where the SVG output will be
+  * drawn. The idiomatic way to create a `Frame` is to start with `Frame(anId)`,
+  * where `anId` is the id of the DOM element where the output should be drawn,
+  * and then call the builder methods starting with `with`.
+  *
+  * For example, this `Frame` specifies a fixed size and a background color.
+  *
+  * ```
+  * Frame("svgCanvas").withSize(300, 300).withBackground(Color.midnightBlue)
+  * ```
+  */
 final case class Frame(
     id: String,
     size: Size,
     background: Option[Color] = None
 ) {
-  def background(color: Color): Frame =
+
+  /** Use the given color as the background.
+    */
+  def withBackground(color: Color): Frame =
     this.copy(background = Some(color))
 
-  def fitToPicture(border: Int = 20): Frame =
+  /** Size the canvas to fit to the picture's bounding box, plus the given
+    * border around the bounding box.
+    */
+  def withSizedToPicture(border: Int = 20): Frame =
     this.copy(size = Size.fitToPicture(border))
 
-  def size(width: Double, height: Double): Frame =
+  /** Size the canvas with the given fixed dimensions. */
+  def withSize(width: Double, height: Double): Frame =
     this.copy(size = Size.fixedSize(width, height))
 }
 object Frame {

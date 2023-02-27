@@ -47,7 +47,7 @@ object SvgWriter
   }
 
   def write[A](file: File, picture: Picture[Algebra, A]): IO[A] =
-    write(file, Frame("").fitToPicture(), picture)
+    write(file, Frame("").withSizedToPicture(), picture)
 
   def base64[A](
       frame: Frame,
@@ -63,5 +63,5 @@ object SvgWriter
   def base64[A](
       picture: Picture[Algebra, A]
   ): IO[(A, B64[format.Svg])] =
-    base64(Frame("").fitToPicture(), picture)
+    base64(Frame("").withSizedToPicture(), picture)
 }
