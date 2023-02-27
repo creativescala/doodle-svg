@@ -13,6 +13,10 @@ Add the following dependency to your `build.sbt`:
 libraryDependencies += "org.creativescala" %%% "doodle-svg" %% @VERSION@
 ```
 
+## ScalaDoc
+
+See the ScalaDoc @:api(doodle.index) for API documentation.
+
 
 ## Usage
 
