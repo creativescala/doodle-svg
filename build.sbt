@@ -3,8 +3,8 @@ import laika.rewrite.link.LinkConfig
 import laika.rewrite.link.ApiLinks
 import laika.theme.Theme
 
-lazy val scala213 = "2.13.8"
-lazy val scala3 = "3.1.2"
+lazy val scala213 = "2.13.10"
+lazy val scala3 = "3.2.1"
 
 ThisBuild / tlBaseVersion := "0.12"
 
@@ -22,7 +22,6 @@ ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports"
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 ThisBuild / tlSitePublishBranch := Some("main")
-ThisBuild / scalacOptions ++= Seq("-release", "8")
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
