@@ -4384,23 +4384,22 @@ $c_Ldoodle_svg_examples_ConcentricCircles$.prototype.circles__I__Ldoodle_algebra
     var fillColor = this$5.hsla__Ldoodle_core_Angle__D__D__D__Ldoodle_core_Color(h, 0.7, 0.6, 1.0);
     return new $c_Ldoodle_syntax_StyleSyntax$$anon$1(fillColor, this$6)
   } else {
-    var this$14 = $m_Ldoodle_syntax_package$all$();
-    var this$9 = $m_Ldoodle_syntax_package$all$();
-    var x = Math.imul(20, count);
-    var diameter = x;
+    var this$13 = $m_Ldoodle_syntax_package$all$();
+    var this$8 = $m_Ldoodle_syntax_package$all$();
+    var diameter = (20.0 * count);
     var picture$1 = new $c_Ldoodle_algebra_ShapeConstructor$$anon$4(diameter);
-    var this$13 = new $c_Ldoodle_syntax_StyleSyntax$StylePictureOps(this$9, picture$1);
-    var this$12 = $m_Ldoodle_core_Color$();
-    var this$10 = $m_Ldoodle_syntax_package$all$();
+    var this$12 = new $c_Ldoodle_syntax_StyleSyntax$StylePictureOps(this$8, picture$1);
+    var this$11 = $m_Ldoodle_core_Color$();
+    var this$9 = $m_Ldoodle_syntax_package$all$();
     var angle = Math.imul(15, count);
-    var this$11 = new $c_Ldoodle_syntax_AngleSyntax$AngleIntOps(this$10, angle);
-    var h$1 = $m_Ldoodle_core_Angle$().degrees__D__Ldoodle_core_Angle(this$11.Ldoodle_syntax_AngleSyntax$AngleIntOps__f_angle);
-    var fillColor$1 = this$12.hsla__Ldoodle_core_Angle__D__D__D__Ldoodle_core_Color(h$1, 0.7, 0.6, 1.0);
-    var picture$2 = new $c_Ldoodle_syntax_StyleSyntax$$anon$1(fillColor$1, this$13);
-    var this$16 = new $c_Ldoodle_syntax_LayoutSyntax$LayoutPictureOps(this$14, picture$2);
+    var this$10 = new $c_Ldoodle_syntax_AngleSyntax$AngleIntOps(this$9, angle);
+    var h$1 = $m_Ldoodle_core_Angle$().degrees__D__Ldoodle_core_Angle(this$10.Ldoodle_syntax_AngleSyntax$AngleIntOps__f_angle);
+    var fillColor$1 = this$11.hsla__Ldoodle_core_Angle__D__D__D__Ldoodle_core_Color(h$1, 0.7, 0.6, 1.0);
+    var picture$2 = new $c_Ldoodle_syntax_StyleSyntax$$anon$1(fillColor$1, this$12);
+    var this$15 = new $c_Ldoodle_syntax_LayoutSyntax$LayoutPictureOps(this$13, picture$2);
     var that = this.circles__I__Ldoodle_algebra_Picture((((-1) + count) | 0));
     var s = $m_Lcats_kernel_instances_unit_package$().Lcats_kernel_instances_unit_package$__f_catsKernelStdAlgebraForUnit;
-    return new $c_Ldoodle_syntax_LayoutSyntax$$anon$4(that, s, this$16)
+    return new $c_Ldoodle_syntax_LayoutSyntax$$anon$4(that, s, this$15)
   }
 });
 $c_Ldoodle_svg_examples_ConcentricCircles$.prototype.draw__T__V = (function(mount) {
