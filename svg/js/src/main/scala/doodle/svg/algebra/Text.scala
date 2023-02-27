@@ -18,7 +18,6 @@ package doodle
 package svg
 package algebra
 
-import doodle.algebra.Algebra
 import doodle.algebra.generic._
 import doodle.core.BoundingBox
 import doodle.core.font.Font

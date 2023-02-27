@@ -18,9 +18,7 @@ package doodle
 package svg
 package examples
 
-import cats.effect.IOApp
 import doodle.core._
-import doodle.core.font._
 import doodle.svg._
 import doodle.syntax.all._
 import scala.scalajs.js.annotation._
@@ -32,7 +30,7 @@ object ConcentricCircles {
     if (count == 0) Picture.circle(20).fillColor(Color.hsl(0.degrees, 0.7, 0.6))
     else
       Picture
-        .circle(count * 20)
+        .circle(count.toDouble * 20.0)
         .fillColor(Color.hsl((count * 15).degrees, 0.7, 0.6))
         .under(circles(count - 1))
 

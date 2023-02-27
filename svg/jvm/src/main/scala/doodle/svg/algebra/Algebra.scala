@@ -24,12 +24,9 @@ import doodle.algebra.generic.Renderable
 import doodle.core.BoundingBox
 import doodle.core.font.Font
 import doodle.java2d.algebra.Java2D
-import doodle.language.Basic
 
-import java.awt.Graphics2D
 import java.awt.geom.Rectangle2D
 import javax.swing.JPanel
-import scala.collection.mutable
 
 trait JvmAlgebraModule
     extends AlgebraModule
@@ -78,5 +75,5 @@ trait JvmAlgebraModule
       }
   }
 
-  val algebraInstance = JvmAlgebra()
+  val algebraInstance = new JvmAlgebra()
 }

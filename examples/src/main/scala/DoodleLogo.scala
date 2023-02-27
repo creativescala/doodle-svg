@@ -18,7 +18,6 @@ package doodle
 package svg
 package examples
 
-import cats.effect.IOApp
 import doodle.core._
 import doodle.core.font._
 import doodle.svg._

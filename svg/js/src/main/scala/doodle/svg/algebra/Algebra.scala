@@ -23,7 +23,6 @@ import doodle.algebra.generic.Finalized
 import doodle.algebra.generic.Renderable
 import doodle.core.BoundingBox
 import doodle.core.font.Font
-import doodle.language.Basic
 import doodle.svg.effect.Canvas
 import org.scalajs.dom.svg.Rect
 
