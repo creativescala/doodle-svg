@@ -6,7 +6,7 @@ import laika.theme.Theme
 lazy val scala213 = "2.13.10"
 lazy val scala3 = "3.2.1"
 
-ThisBuild / tlBaseVersion := "0.12"
+ThisBuild / tlBaseVersion := "0.13"
 
 ThisBuild / organization := "org.creativescala"
 ThisBuild / organizationName := "Creative Scala"
@@ -18,7 +18,7 @@ ThisBuild / developers := List(tlGitHubDev("noelwelsh", "Noel Welsh"))
 ThisBuild / crossScalaVersions := List(scala3, scala213)
 ThisBuild / scalaVersion := crossScalaVersions.value.head
 ThisBuild / useSuperShell := false
-ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.5.0"
+ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 ThisBuild / tlSitePublishBranch := Some("main")
@@ -40,7 +40,7 @@ val css = taskKey[Unit]("Build the CSS")
 val createDocs = taskKey[Unit]("Produce documentation")
 val previewDocs = taskKey[Unit]("Preview documentation")
 
-val doodleVersion = "0.16.0"
+val doodleVersion = "0.17.0"
 
 lazy val root = tlCrossRootProject.aggregate(svg, docs, unidocs)
 
