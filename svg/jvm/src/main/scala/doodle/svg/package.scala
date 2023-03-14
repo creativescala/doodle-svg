@@ -36,12 +36,13 @@ package object svg {
     doodle.svg.effect.SvgWriter
 
   type Picture[A] = doodle.algebra.Picture[Algebra, A]
-  object Picture {
-    def apply(f: Algebra => Drawing[Unit]): Picture[Unit] = {
-      new Picture[Unit] {
-        def apply(implicit algebra: Algebra): Drawing[Unit] =
-          f(algebra)
-      }
-    }
+  object Picture
+      extends doodle.algebra.BaseConstructor
+      with doodle.algebra.PathConstructor
+      with doodle.algebra.ShapeConstructor
+      with doodle.algebra.TextConstructor {
+
+    type Algebra = svg.Algebra
+    type Drawing[A] = svg.Drawing[A]
   }
 }
