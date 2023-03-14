@@ -61,8 +61,13 @@ On the JVM you can't draw SVG to the screen. Use the `java2d` backend for that i
 
 ## Examples
 
+The source for these examples is [in the repository](https://github.com/creativescala/doodle-svg/tree/main/examples/src/main/scala).
+
 ### Concentric Circles
 @:doodle("concentric-circles", "ConcentricCircles.draw")
 
 ### Doodle Logo
 @:doodle("doodle-logo", "DoodleLogo.draw")
+
+### Pulsing Circle
+@:doodle("pulsing-circle", "PulsingCircle.draw")
