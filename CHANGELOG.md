@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.13.1 14-Mar-2023
+## 0.14.0 14-Mar-2023
 
 - Add constructors to JVM `Picture` object
 

@@ -6,7 +6,7 @@ import laika.theme.Theme
 lazy val scala213 = "2.13.10"
 lazy val scala3 = "3.2.1"
 
-ThisBuild / tlBaseVersion := "0.13"
+ThisBuild / tlBaseVersion := "0.14"
 
 ThisBuild / organization := "org.creativescala"
 ThisBuild / organizationName := "Creative Scala"
