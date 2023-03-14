@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.1 14-Mar-2023
+
+- Add constructors to JVM `Picture` object
+
+
 ## 0.13.0 7-Mar-2023
 
 - Build against Doodle 0.17.0
