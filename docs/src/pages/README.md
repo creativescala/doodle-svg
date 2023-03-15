@@ -10,7 +10,7 @@ This project draws Doodle pictures to SVG, both in the browser using [Scala JS](
 Add the following dependency to your `build.sbt`:
 
 ```scala
-libraryDependencies += "org.creativescala" %%% "doodle-svg" %% @VERSION@
+libraryDependencies += "org.creativescala" %%% "doodle-svg" %% "@VERSION@"
 ```
 
 ## ScalaDoc
