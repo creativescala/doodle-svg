@@ -6,7 +6,7 @@ import laika.theme.Theme
 lazy val scala213 = "2.13.10"
 lazy val scala3 = "3.2.1"
 
-ThisBuild / tlBaseVersion := "0.14"
+ThisBuild / tlBaseVersion := "0.15"
 
 ThisBuild / organization := "org.creativescala"
 ThisBuild / organizationName := "Creative Scala"
@@ -40,7 +40,7 @@ val css = taskKey[Unit]("Build the CSS")
 val createDocs = taskKey[Unit]("Produce documentation")
 val previewDocs = taskKey[Unit]("Preview documentation")
 
-val doodleVersion = "0.17.0"
+val doodleVersion = "0.18.0"
 
 lazy val root = tlCrossRootProject.aggregate(svg, docs, unidocs)
 
