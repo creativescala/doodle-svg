@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.15.1 8-Jun-2023
+
+- Fix rendering bug for text on the JS backend
+
+
 ## 0.14.0 14-Mar-2023
 
 - Add constructors to JVM `Picture` object
