@@ -35,8 +35,8 @@ object DoodleLogo {
         Picture
           .text("Doodle SVG")
           .font(font)
-          .fillColor(Color.hotpink.spin(10.degrees * i))
-          .at(i * 3, i * -3)
+          .fillColor(Color.hotpink.spin(10.degrees * i.toDouble))
+          .at(i * 3.0, i * -3.0)
       )
       .toList
       .allOn
