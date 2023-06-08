@@ -5231,37 +5231,35 @@ function $c_Ldoodle_svg_examples_DoodleLogo$() {
   var style$1 = this$4.Ldoodle_core_font_Font__f_style;
   var size$1 = this$4.Ldoodle_core_font_Font__f_size;
   this.Ldoodle_svg_examples_DoodleLogo$__f_font = new $c_Ldoodle_core_font_Font(family$1, style$1, weight$1, size$1);
-  var this$23 = $m_Ldoodle_syntax_package$all$();
+  var this$20 = $m_Ldoodle_syntax_package$all$();
   var b = $m_sci_IndexedSeq$().newBuilder__scm_Builder();
   var it = new $c_sci_RangeIterator(0, 1, 10, false);
   while (it.sci_RangeIterator__f__hasNext) {
-    var this$20 = $n(b);
+    var this$17 = $n(b);
     var arg1 = it.next__I();
-    var this$16 = $m_Ldoodle_syntax_package$all$();
+    var this$15 = $m_Ldoodle_syntax_package$all$();
     var this$11 = $m_Ldoodle_syntax_package$all$();
     var this$9 = $m_Ldoodle_syntax_package$all$();
     var picture = new $c_Ldoodle_algebra_TextConstructor$$anon$1("Doodle SVG");
     var this$10 = new $c_Ldoodle_syntax_TextSyntax$TextPictureOps(this$9, picture);
     var font = this.Ldoodle_svg_examples_DoodleLogo$__f_font;
     var picture$1 = new $c_Ldoodle_syntax_TextSyntax$$anon$1(font, this$10);
-    var this$15 = new $c_Ldoodle_syntax_StyleSyntax$StylePictureOps(this$11, picture$1);
+    var this$14 = new $c_Ldoodle_syntax_StyleSyntax$StylePictureOps(this$11, picture$1);
     var $$x1 = $n($m_Ldoodle_core_Color$().Ldoodle_core_Color$__f_hotpink);
     var this$12 = $m_Ldoodle_syntax_package$all$();
     var this$13 = new $c_Ldoodle_syntax_AngleSyntax$AngleIntOps(this$12, 10);
     var fillColor = $n($$x1).spin__Ldoodle_core_Angle__Ldoodle_core_Color$HSLA($n($m_Ldoodle_core_Angle$().degrees__D__Ldoodle_core_Angle(this$13.Ldoodle_syntax_AngleSyntax$AngleIntOps__f_angle)).$times__D__Ldoodle_core_Angle(arg1));
-    var picture$2 = new $c_Ldoodle_syntax_StyleSyntax$$anon$1(fillColor, this$15);
-    var this$19 = new $c_Ldoodle_syntax_LayoutSyntax$LayoutPictureOps(this$16, picture$2);
-    var x = Math.imul(3, arg1);
-    var x$2 = x;
-    var x$1 = Math.imul((-3), arg1);
-    var y = x$1;
-    var elem = new $c_Ldoodle_syntax_LayoutSyntax$$anon$7(x$2, y, this$19);
-    this$20.addOne__O__scm_Growable(elem)
+    var picture$2 = new $c_Ldoodle_syntax_StyleSyntax$$anon$1(fillColor, this$14);
+    var this$16 = new $c_Ldoodle_syntax_LayoutSyntax$LayoutPictureOps(this$15, picture$2);
+    var x = (3.0 * arg1);
+    var y = ((-3.0) * arg1);
+    var elem = new $c_Ldoodle_syntax_LayoutSyntax$$anon$7(x, y, this$16);
+    this$17.addOne__O__scm_Growable(elem)
   };
-  var this$21 = $n($as_sci_IndexedSeq($n(b).result__O()));
+  var this$18 = $n($as_sci_IndexedSeq($n(b).result__O()));
   $m_sci_List$();
-  var t = $m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(this$21);
-  this.Ldoodle_svg_examples_DoodleLogo$__f_logo = new $c_Ldoodle_syntax_TraverseSyntax$TraverseOps(this$23, t).allOn__Lcats_Traverse__Ldoodle_algebra_Picture(($m_Lcats_UnorderedFoldable$(), $as_Lcats_Traverse($m_Lcats_instances_package$list$().Lcats_instances_package$list$__f_catsStdInstancesForList)))
+  var t = $m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(this$18);
+  this.Ldoodle_svg_examples_DoodleLogo$__f_logo = new $c_Ldoodle_syntax_TraverseSyntax$TraverseOps(this$20, t).allOn__Lcats_Traverse__Ldoodle_algebra_Picture(($m_Lcats_UnorderedFoldable$(), $as_Lcats_Traverse($m_Lcats_instances_package$list$().Lcats_instances_package$list$__f_catsStdInstancesForList)))
 }
 $c_Ldoodle_svg_examples_DoodleLogo$.prototype = new $h_O();
 $c_Ldoodle_svg_examples_DoodleLogo$.prototype.constructor = $c_Ldoodle_svg_examples_DoodleLogo$;
