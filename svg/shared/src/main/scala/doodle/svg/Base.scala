@@ -34,7 +34,18 @@ trait Base { self =>
 
   val bundle: Bundle[Builder, Output, FragT]
 
-  type Tag = bundle.implicits.Tag
+  type Tag = bundle.Tag
+  type Attr = bundle.Attr
+
+  /** The result is:
+    *
+    *   - the Tag that should be rendered for this Picture
+    *
+    *   - other Tags that should be rendered in a separate group. Used for
+    *     gradients and font styles, which must be specified separately in SVG.
+    *
+    *   - the restul of evaluating the Picture
+    */
   type SvgResult[A] = (Tag, mutable.Set[Tag], A)
   type Algebra <: doodle.algebra.Algebra { type Drawing[A] = self.Drawing[A] }
   type Drawing[A] = Finalized[SvgResult, A]

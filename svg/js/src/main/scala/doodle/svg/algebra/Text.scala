@@ -48,12 +48,25 @@ trait TextModule extends JsBase {
       ): SvgResult[Unit] = {
         import bundle.implicits.{Tag => _, _}
         val set = mutable.Set.empty[Tag]
-        // (0,0) of the Rect is the left baseline. For Doodle (0,0) is the
-        // center of the bounding box.
+        // (0,0) of the bounds Rect is the left baseline. See
+        // https://www.w3.org/Graphics/SVG/IG/resources/svgprimer.html#getBBox
+        //
+        // For Doodle (0,0) is the center of the bounding box.
         val style = Svg.toStyle(stroke, fill, set)
         val elt = Svg.textTag(text, font)(
+          // Our y coordinates are reversed (y increases as we move up in
+          // Doodle, and decreases in SVG). The transform takes care of this but
+          // means the text will be drawn upside down, so we must flip it before
+          // rendering
+          svgAttrs.transform := Svg.toSvgTransform(
+            Tx.verticalReflection.andThen(tx)
+          ),
           svgAttrs.x := -(bounds.x + bounds.width) / 2.0,
           svgAttrs.y := (bounds.y + bounds.height) / 2.0,
+          // Setting baseline to the middle allows us to accurately layout the
+          // text. Otherwise we don't know how far the baseline is offset from
+          // the bounding box we're given.
+          svgAttrs.dominantBaseline := "middle",
           svgAttrs.style := style
         )
 

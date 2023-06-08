@@ -24,6 +24,7 @@ import doodle.algebra.Picture
 import doodle.algebra.generic.Fill
 import doodle.algebra.generic.Stroke
 import doodle.core._
+import doodle.core.font.FontSize.Points
 import doodle.core.font._
 import doodle.svg.effect.Size
 
@@ -131,13 +132,18 @@ trait SvgModule { self: Base =>
           case FontWeight.Normal => "normal"
         }
 
-      val style = s"""
-        |font-family: ${fontFamily};
-        |font-style: ${fontStyle};
-        |font-weight: ${fontWeight};
-        """.stripMargin
+      val fontSize =
+        font.size match {
+          case Points(pts) => s"${pts}pt"
+        }
 
-      svg.text(svgAttrs.style := style, text)
+      svg.text(
+        svgAttrs.fontFamily := fontFamily,
+        bundle.styles.fontStyle := fontStyle,
+        svgAttrs.fontSize := fontSize,
+        svgAttrs.fontWeight := fontWeight,
+        text
+      )
     }
 
     /** Transform from client coordinates to local coordinates

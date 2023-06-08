@@ -25,23 +25,20 @@ import doodle.syntax.all._
 import scala.scalajs.js.annotation._
 import cats.effect.unsafe.implicits.global
 
-@JSExportTopLevel("DoodleLogo")
-object DoodleLogo {
-  val font =
-    Font.defaultSansSerif.size(FontSize.points(22)).weight(FontWeight.bold)
-  val logo: Picture[Unit] =
-    (0.to(10))
-      .map(i =>
-        Picture
-          .text("Doodle SVG")
-          .font(font)
-          .fillColor(Color.hotpink.spin(10.degrees * i))
-          .at(i * 3, i * -3)
+@JSExportTopLevel("TextPositioning")
+object TextPositioning {
+  val font = Font.defaultSansSerif.size(FontSize.points(18))
+  def text(string: String): Picture[Unit] =
+    Picture.text(string).font(font).fillColor(Color.hotpink)
+
+  val textPositioning: Picture[Unit] =
+    text("Above")
+      .above(
+        text("Center").on(Picture.circle(100).strokeWidth(3.0))
       )
-      .toList
-      .allOn
+      .above(text("Below"))
 
   @JSExport
   def draw(mount: String) =
-    logo.drawWithFrame(Frame(mount))
+    textPositioning.drawWithFrame(Frame(mount))
 }

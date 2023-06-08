@@ -66,6 +66,9 @@ The source for these examples is [in the repository](https://github.com/creative
 ### Concentric Circles
 @:doodle("concentric-circles", "ConcentricCircles.draw")
 
+### Text Positioning
+@:doodle("text-positioning", "TextPositioning.draw")
+
 ### Doodle Logo
 @:doodle("doodle-logo", "DoodleLogo.draw")
 
