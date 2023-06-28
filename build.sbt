@@ -3,10 +3,10 @@ import laika.rewrite.link.LinkConfig
 import laika.rewrite.link.ApiLinks
 import laika.theme.Theme
 
-lazy val scala213 = "2.13.10"
-lazy val scala3 = "3.2.1"
+lazy val scala213 = "2.13.11"
+lazy val scala3 = "3.3.0"
 
-ThisBuild / tlBaseVersion := "0.15"
+ThisBuild / tlBaseVersion := "0.16"
 
 ThisBuild / organization := "org.creativescala"
 ThisBuild / organizationName := "Creative Scala"
@@ -40,7 +40,7 @@ val css = taskKey[Unit]("Build the CSS")
 val createDocs = taskKey[Unit]("Produce documentation")
 val previewDocs = taskKey[Unit]("Preview documentation")
 
-val doodleVersion = "0.18.0"
+val doodleVersion = "0.19.0"
 
 lazy val root = tlCrossRootProject.aggregate(svg, docs, unidocs)
 
