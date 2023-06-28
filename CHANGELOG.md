@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.16.0 28-Jun-2023
+
+- Update to Doodle 0.19
+
+- Update to Scala 3.3.0 and 2.13.11
+
+
 ## 0.15.1 8-Jun-2023
 
 - Fix rendering bug for text on the JS backend
