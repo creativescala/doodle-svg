@@ -1094,15 +1094,15 @@ function $p_LParametricSpiral$__loop$1__F1__F1__Ldoodle_core_Angle__I__Ldoodle_a
     return new $c_Ldoodle_syntax_LayoutSyntax$$anon$10(pt, this$2)
   } else {
     var pt$2 = $as_Ldoodle_core_Point($n(curve$1).apply__O__O($n(turn$1).$times__D__Ldoodle_core_Angle(count)));
-    var this$6 = $m_Ldoodle_syntax_package$all$();
-    var this$4 = $m_Ldoodle_syntax_package$all$();
+    var this$5 = $m_Ldoodle_syntax_package$all$();
+    var this$3 = $m_Ldoodle_syntax_package$all$();
     var picture$1 = $as_Ldoodle_algebra_Picture($n(marker$1).apply__O__O(pt$2));
-    var this$5 = new $c_Ldoodle_syntax_LayoutSyntax$LayoutPictureOps(this$4, picture$1);
-    var picture$2 = new $c_Ldoodle_syntax_LayoutSyntax$$anon$10(pt$2, this$5);
-    var this$8 = new $c_Ldoodle_syntax_LayoutSyntax$LayoutPictureOps(this$6, picture$2);
+    var this$4 = new $c_Ldoodle_syntax_LayoutSyntax$LayoutPictureOps(this$3, picture$1);
+    var picture$2 = new $c_Ldoodle_syntax_LayoutSyntax$$anon$10(pt$2, this$4);
+    var this$7 = new $c_Ldoodle_syntax_LayoutSyntax$LayoutPictureOps(this$5, picture$2);
     var that = $p_LParametricSpiral$__loop$1__F1__F1__Ldoodle_core_Angle__I__Ldoodle_algebra_Picture($thiz, marker$1, curve$1, turn$1, (((-1) + count) | 0));
     var s = $m_Lcats_kernel_instances_unit_package$().Lcats_kernel_instances_unit_package$__f_catsKernelStdAlgebraForUnit;
-    return new $c_Ldoodle_syntax_LayoutSyntax$$anon$1(that, s, this$8)
+    return new $c_Ldoodle_syntax_LayoutSyntax$$anon$1(that, s, this$7)
   }
 }
 /** @constructor */
