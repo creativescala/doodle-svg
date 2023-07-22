@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.16.1 22-Jul-2023
+
+- Fix long-standing viewbox positioning bug
+
+
 ## 0.16.0 28-Jun-2023
 
 - Update to Doodle 0.19
