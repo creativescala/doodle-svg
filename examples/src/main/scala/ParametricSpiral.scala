@@ -16,14 +16,14 @@ object ParametricSpiral {
       curve: Angle => Point
   ): Picture[Unit] = {
     // Angle.one is one complete turn. I.e. 360 degrees
-    val turn = Angle.one / points
+    val turn = Angle.one / points.toDouble
     def loop(count: Int): Picture[Unit] = {
       count match {
         case 0 =>
           val pt = curve(Angle.zero)
           marker(pt).at(pt)
         case n =>
-          val pt = curve(turn * count)
+          val pt = curve(turn * count.toDouble)
           marker(pt).at(pt).on(loop(n - 1))
       }
     }
