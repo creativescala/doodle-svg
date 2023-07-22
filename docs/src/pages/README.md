@@ -74,3 +74,6 @@ The source for these examples is [in the repository](https://github.com/creative
 
 ### Pulsing Circle
 @:doodle("pulsing-circle", "PulsingCircle.draw")
+
+### Parametric Spiral
+@:doodle("parametric-spiral", "ParametricSpiral.draw")

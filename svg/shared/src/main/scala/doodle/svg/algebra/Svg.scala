@@ -91,7 +91,7 @@ trait SvgModule { self: Base =>
             svgAttrs.xmlns := s"http://www.w3.org/2000/svg",
             svgAttrs.width := w,
             svgAttrs.height := h,
-            svgAttrs.viewBox := s"${bb.left - border} ${bb.bottom - border} ${w} ${h}",
+            svgAttrs.viewBox := s"${bb.left - border} ${-bb.top - border} ${w} ${h}",
             bundle.attrs.style :=
               frame.background
                 .map(c => s"background-color: ${Svg.toHSLA(c)};")
